@@ -1,0 +1,7 @@
+INDEX VERSION 1.131+D:\Bank_Passbook _System\uhpocTraining-Bank_passbook_sys\.metadata\.plugins\org.eclipse.jdt.core
+383866144.index
+3787610276.index
+1865797976.index
+2079156263.index
+2044953135.index
+2157647681.index
