@@ -1,0 +1,99 @@
+package com.cpa.serviceimpl;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.cpa.entity.Customer;
+import com.cpa.repository.CustRepo;
+import com.cpa.service.CustService;
+
+public class CustServiceImpl implements CustService{
+
+	CustRepo custRepo = new CustRepo();
+	Map<String, Customer> cust_map = new HashMap<String, Customer>();
+	public static void main(String[] args) throws SQLException, IOException {
+		
+		CustServiceImpl custServiceImpl = new CustServiceImpl();
+		
+//		System.out.println(custServiceImpl.checkCust("878613310"));;
+		
+		 System.out.println(custServiceImpl.cust_map);
+		 System.out.println(custServiceImpl.addCust("Rohan", "Talera Nagar", "Talera Nagar", "Pune", "889513310"));
+		 System.out.println(custServiceImpl.initializeHashmap());;
+	}
+	
+	
+	
+	//METHOD TO INITIALIZE HASHMAP FOR CUSTOMER ENTITY BY CUSTOMER TABLE IN DB
+	@Override
+	public HashMap<String, Customer> initializeHashmap() {
+		// TODO Auto-generated method stub
+	//System.out.println(	custRepo.getAllCustomers());;
+	
+ 
+	ArrayList<Customer> customerList=custRepo.getAllCustomers();
+	
+	for(int i=0 ; i<customerList.size(); i++)
+	{
+		Customer customer = customerList.get(i);
+//		 System.out.println(customer);
+//		 System.out.println("End");
+		 
+		String al_acc_number = customer.getAccount_number();
+//		System.out.println(al_acc_number);
+		
+		cust_map.put(al_acc_number, customer);
+		
+	}
+	
+		return (HashMap<String, Customer>) cust_map;
+	}
+
+	
+	
+	@Override
+	public boolean checkCust(String phone) {
+		// TODO Auto-generated method stub
+		int flag =1;
+		custRepo.isCustExist(phone);
+		
+		HashMap<String , Customer> hashMap;
+		CustService custService = new CustServiceImpl();
+		
+		hashMap = custService.initializeHashmap();
+		
+		for (Customer cust : hashMap.values()) {
+			System.out.println("@@@@@@@@@@");
+			System.out.println(cust);
+			
+			String custmap_phone = cust.getPhone();
+			
+			if(custmap_phone.equalsIgnoreCase(phone))
+			{
+				flag = 0;
+			}
+			
+		}
+		
+		return (flag == 0) ? true : false;
+	}
+
+	@Override
+	public String addCust(String customer_name, String customer_address1, String customer_address2, String customer_city, String customer_phone) throws SQLException, IOException {
+
+		return custRepo.insertCustomer(customer_name,customer_address1,customer_address2,customer_city,customer_phone);
+		
+		
+	}
+
+	@Override
+	public Customer getCustomerByAccountNumber(String acc_no) {
+		// TODO Auto-generated method stub
+		custRepo.getCustomer(acc_no);
+		return custRepo.getCustomer(acc_no);
+	}
+
+}

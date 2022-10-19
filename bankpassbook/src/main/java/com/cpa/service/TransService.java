@@ -1,5 +1,5 @@
 package com.cpa.service;
 
-public class TransService {
+public interface  TransService {
 
 }

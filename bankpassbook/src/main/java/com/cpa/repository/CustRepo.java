@@ -1,10 +1,14 @@
 package com.cpa.repository;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Properties;
 
 import org.postgresql.util.PSQLException;
 
@@ -14,25 +18,26 @@ import com.cpa.exception.CPException;
 
 public class CustRepo {
 
-	
-	public static void main(String[] args) throws SQLException {
+	private Properties props = null;
+	public static void main(String[] args) throws SQLException, IOException {
 		CustRepo custRepo = new CustRepo();
 		// custRepo.getAllCustomers();
 		// System.out.println(custRepo.isCustExist("9865326589"));;
-		//custRepo.insertCustomer("Kshitija", "Talera Nagar", "Talera Nagar", "Pune", "788613310");
+	System.out.println(	custRepo.insertCustomer("Komal", "Talera Nagar", "Talera Nagar", "Pune", "868613310"));
 //		String acc = "BOIN0022";
-		Customer customer = custRepo.getCustomer("BOIN0022");
-		System.out.println(customer);;
+//		Customer customer = custRepo.getCustomer("BOIN0022");
+//		System.out.println(customer);;
 	}
 
 	
 	//FUNCTION TO RETRIEVE ALL ENTRIES IN CUSTOMER TABLE
-	public void getAllCustomers() {
+	public ArrayList<Customer> getAllCustomers() {
 
 		DBManager dbm = null;
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
+		ArrayList<Customer> customerList = new ArrayList<Customer>();
 
 		int flag = 1;
 
@@ -42,20 +47,42 @@ public class CustRepo {
 			con = dbm.getConnection();
 			st = con.createStatement();
 			rs = st.executeQuery("select * from customer");
+			
 			// final String SQL_LAST_ENTRY = "SELECT account_number FROM customer WHERE
 			// cust_seq_id=(SELECT MAX(cust_seq_id) FROM customer)";
 			// rs = st.executeQuery(SQL_LAST_ENTRY);
 			// System.out.println(SQL_LAST_ENTRY);
 			while (rs.next()) {
+				Customer customer = new Customer();
+				int db_cust_seq_id = rs.getInt("cust_seq_id");
+				customer.setCust_seq_id(db_cust_seq_id);
+				
+				int db_bank_id = rs.getInt("bank_id");
+				customer.setBank_id(db_bank_id);
+				
+				String db_account_number = rs.getString("account_number");
+				customer.setAccount_number(db_account_number);
+				
+				String db_cust_name = rs.getString("cust_name");
+				customer.setCust_name(db_cust_name);
+				
+				String db_address1 = rs.getString("address1");
+				customer.setAddress1(db_address1);
+				
+				String db_address2 = rs.getString("address2");
+				customer.setAddress2(db_address2);
+				
+				String db_city = rs.getString("city");
+				customer.setCity(db_city);
+				
+				String db_phone = rs.getString("phone");
+				customer.setPhone(db_phone);
+				
+				customerList.add(customer);
+				
+			
 
-				rs.getInt(1);
-				rs.getInt(2);
-				rs.getString(1);
-				rs.getString(4);
 
-				System.out.println(rs.getInt(1) + " " + rs.getInt(2) + " " + rs.getString(3) + " " + rs.getString(4)
-						+ " " + rs.getLong("phone"));
-				System.out.println(rs.getString(1));
 			}
 		} catch (CPException exp) {
 			exp.printStackTrace();
@@ -70,6 +97,7 @@ public class CustRepo {
 
 			}
 		}
+		return customerList ;
 
 	}
 
@@ -122,14 +150,17 @@ public class CustRepo {
 	
 	
 	//FUNCTION TO INSERT NEW CUSTOMER
-	public void insertCustomer(String customer_name, String customer_address1, String customer_address2,
-			String customer_city, String customer_phone) throws SQLException {
+	public String insertCustomer(String customer_name, String customer_address1, String customer_address2, String customer_city, String customer_phone) throws SQLException, IOException {
 		DBManager dbm = null;
 		Connection con = null;
 		boolean action = false;
 		ResultSet rs = null;
 		PreparedStatement st = null;
-
+		
+		props = new Properties();
+		FileInputStream fs = new FileInputStream("src/main/resources/bank_entity.properties");
+		props.load(fs);
+		System.out.println(props.getProperty("bankId"));
 		final String SQL_INSERT = "INSERT INTO customer (bank_id, account_number, cust_name,address1 , address2, city, phone) VALUES (?,?,?,?,?,?,?)";
 
 		try {
@@ -139,7 +170,7 @@ public class CustRepo {
 			Statement st1 = con.createStatement();
 			st = con.prepareStatement(SQL_INSERT);
 
-			st.setInt(1, 1);
+			st.setInt(1,Integer.parseInt(props.getProperty("bankId")));
 			st.setString(2, "BOIN00");
 			st.setString(3, customer_name);
 			st.setString(4, customer_address1);
@@ -169,6 +200,18 @@ public class CustRepo {
 					st = con.prepareStatement(SQL_UPDATE);
 					st.executeUpdate();
 				}
+			}
+				if (action == false) {
+//					System.out.println("@@@@@@@@@@@@@@@@@@@@");
+					final String SQL_LAST_ENTRY_ACC_NUM = "SELECT account_number FROM customer WHERE cust_seq_id=(SELECT MAX(cust_seq_id) FROM customer)";
+					rs = st1.executeQuery(SQL_LAST_ENTRY_ACC_NUM);
+					System.out.println(rs);
+					while (rs.next()) {
+					String last_acc_number = rs.getString("account_number");
+					
+					return last_acc_number;
+					
+					}
 
 			}
 			
@@ -190,6 +233,7 @@ public class CustRepo {
 			dbm.closeConnection(con);
 
 		}
+		return null;
 
 	}
 
@@ -262,6 +306,7 @@ public class CustRepo {
 		return customer;
 
 	}
+
 
 	
 }

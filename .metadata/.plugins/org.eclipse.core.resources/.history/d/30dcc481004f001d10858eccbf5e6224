@@ -1,0 +1,19 @@
+package com.cpa.service;
+
+import java.util.HashMap;
+
+import com.cpa.entity.Customer;
+
+public interface CustService {
+
+	
+	
+	public HashMap<Integer,Customer> initializeHashmap();
+	
+	public boolean checkCust(String phone);
+	
+	public void addCust();
+	 
+	public Customer getCustomerById();
+	
+}
