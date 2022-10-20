@@ -1,0 +1,16 @@
+package com.cpa.service;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.cpa.entity.Transaction;
+
+public interface  TransService {
+
+	public HashMap<Integer,Transaction> initializeHashMap();
+	
+	
+	
+	public String addTranDetails();
+
+	public ArrayList<Transaction> getTransactionByAccNum(String acc_number);
+}

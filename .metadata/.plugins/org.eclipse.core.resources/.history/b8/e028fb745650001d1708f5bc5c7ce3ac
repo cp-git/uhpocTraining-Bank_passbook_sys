@@ -1,0 +1,20 @@
+package com.cpa.service;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.cpa.entity.Transaction;
+
+public interface  TransService {
+
+	public HashMap<Integer,Transaction> initializeHashMap();
+	
+	
+	
+	
+
+	public ArrayList<Transaction> getTransactionByAccNum(String acc_number);
+
+
+
+	public String addTranDetails(int cust_seq_id, String tran_date, String tran_details, Double credit_amt, Double debit_amt);
+}

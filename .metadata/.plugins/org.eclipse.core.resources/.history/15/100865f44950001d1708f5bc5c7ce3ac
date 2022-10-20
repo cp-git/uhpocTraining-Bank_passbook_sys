@@ -1,0 +1,52 @@
+package com.cpa.serviceimpl;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.cpa.entity.Transaction;
+import com.cpa.repository.TransRepo;
+import com.cpa.service.TransService;
+
+public class TransServiceImpl implements  TransService {
+
+	TransRepo transRepo = new TransRepo();
+	Map<Integer, Transaction> trans_map = new HashMap<Integer, Transaction>();
+	
+	
+	public static void main(String[] args) {
+		
+		TransServiceImpl serviceImpl = new TransServiceImpl();
+		System.out.println(serviceImpl.initializeHashMap());
+	}
+	////METHOD TO INITIALIZE HASHMAP FOR TRANSACTION ENTITY BY TRANSACTION TABLE IN DB
+	@Override
+	public HashMap<Integer, Transaction> initializeHashMap() {
+		ArrayList<Transaction> trArrayList=transRepo.getAllTransactions();
+		
+		for(int i=0 ; i<trArrayList.size(); i++)
+		{
+			Transaction transaction = trArrayList.get(i);
+
+			Integer al_tran_id = transaction.getCust_seq_id();
+			trans_map.put(al_tran_id,transaction);
+			
+		}
+		
+			return (HashMap<Integer, Transaction>) trans_map;
+		
+	}
+
+	@Override
+	public Transaction getTransactionByAccNum() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addTranDetails() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

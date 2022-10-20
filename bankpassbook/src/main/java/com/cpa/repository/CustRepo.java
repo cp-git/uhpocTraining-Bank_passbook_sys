@@ -181,7 +181,7 @@ public class CustRepo {
 			// action = st.executeUpdate();
 
 			action = st.execute();
-			System.out.println("company inserted successfully");
+			System.out.println("customer inserted successfully");
 			System.out.println(action);
 			
 			//CODE TO INITIALIZE ACCOUNT NUMBER SAME AS CUST_SEQ_ID
@@ -224,7 +224,7 @@ public class CustRepo {
 		}
 		 catch(PSQLException psqlException)
 		 {
-		 System.out.println("Company Creation failed ");
+		 System.out.println("Customer Creation failed ");
 		
 		 }
 		catch (Exception exp1) {

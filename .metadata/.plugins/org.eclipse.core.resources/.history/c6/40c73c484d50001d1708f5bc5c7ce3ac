@@ -1,0 +1,87 @@
+package com.cpa.serviceimpl;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.cpa.entity.Transaction;
+import com.cpa.repository.TransRepo;
+import com.cpa.service.CustService;
+import com.cpa.service.TransService;
+
+public class TransServiceImpl implements  TransService {
+
+	TransRepo transRepo = new TransRepo();
+	CustService custService = new CustServiceImpl();
+	Map<Integer, Transaction> trans_map = new HashMap<Integer, Transaction>();
+	
+	
+	public static void main(String[] args) {
+		
+		TransServiceImpl serviceImpl = new TransServiceImpl();
+	//	System.out.println(serviceImpl.initializeHashMap());
+		System.out.println(serviceImpl.getTransactionByAccNum("BOIN0024"));
+	}
+	
+	
+	
+	
+	////METHOD TO INITIALIZE HASHMAP FOR TRANSACTION ENTITY BY TRANSACTION TABLE IN DB
+	@Override
+	public HashMap<Integer, Transaction> initializeHashMap() {
+		ArrayList<Transaction> trArrayList=transRepo.getAllTransactions();
+		
+		for(int i=0 ; i<trArrayList.size(); i++)
+		{
+			Transaction transaction = trArrayList.get(i);
+
+			Integer al_tran_id = transaction.getTran_id();
+			trans_map.put(al_tran_id,transaction);
+			
+		}
+		
+			return (HashMap<Integer, Transaction>) trans_map;
+		
+	}
+
+	
+	//METHOD TO GET TRANSACTION BY ACCOUNT NUMBER
+	@Override
+	public Transaction getTransactionByAccNum(String acc_number) {
+	
+	 Integer tran_cust_id = custService.getCust_seq_idByAccNum(acc_number);
+		
+	 int flag =1;
+		
+		
+		TransService tranService = new TransServiceImpl();
+		
+		
+		trans_map = tranService.initializeHashMap();
+		
+		for (Transaction transaction : trans_map.values()) {
+//			System.out.println("@@@@@@@@@@");
+//			System.out.println(cust);
+			
+			Integer tranmap_cust_seq_id = transaction.getCust_seq_id();
+			
+			if(tranmap_cust_seq_id.equals(tran_cust_id))
+			{
+				
+				
+				return transaction;
+			}
+			
+		}
+		
+		return null;
+		
+	}
+
+	@Override
+	public void addTranDetails() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
