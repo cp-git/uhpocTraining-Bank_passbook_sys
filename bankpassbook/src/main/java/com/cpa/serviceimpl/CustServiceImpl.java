@@ -20,7 +20,7 @@ public class CustServiceImpl implements CustService{
 		
 //		System.out.println(custServiceImpl.checkCust("778613310"));;
 	//	System.out.println(custServiceImpl.getCustomerByAccountNumber("BOIN0024"));
-		System.out.println(custServiceImpl.getCust_seq_idByAccNum("BOIN0024"));
+	//	System.out.println(custServiceImpl.getCust_seq_idByAccNum("BOIN0024"));
 //		 System.out.println(custServiceImpl.cust_map);
 //		 System.out.println(custServiceImpl.addCust("Rohan", "Talera Nagar", "Talera Nagar", "Pune", "889513310"));
 //		 System.out.println(custServiceImpl.initializeHashmap());;
@@ -67,8 +67,8 @@ public class CustServiceImpl implements CustService{
 		cust_map = custService.initializeHashmap();
 		
 		for (Customer cust : cust_map.values()) {
-			System.out.println("@@@@@@@@@@");
-			System.out.println(cust);
+//			System.out.println("@@@@@@@@@@");
+//			System.out.println(cust);
 			
 			String custmap_phone = cust.getPhone();
 			

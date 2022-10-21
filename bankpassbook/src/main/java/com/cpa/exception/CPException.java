@@ -17,6 +17,7 @@ public class CPException extends Exception{
 		super();
 		this.errCode = errCode;
 		this.errMsg = errMsg;
+		System.out.println(this.errMsg);
 	}
 
 
@@ -41,6 +42,12 @@ public class CPException extends Exception{
 
 	public void setErrMsg(String errMsg) {
 		this.errMsg = errMsg;
+	}
+
+
+	@Override
+	public String toString() {
+		return "CPException [errCode=" + errCode + ", errMsg=" + errMsg + "]";
 	}
 	
 	

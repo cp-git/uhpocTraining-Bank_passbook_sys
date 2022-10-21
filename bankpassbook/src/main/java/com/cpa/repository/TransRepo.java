@@ -20,7 +20,7 @@ public class TransRepo {
 	TransRepo transRepo = new TransRepo();
 	
 	System.out.println(transRepo.getAllTransactions());
-	//System.out.println(transRepo.insertTransaction(22,"10/10/2022", "Salary October", 50000.0, 0.0));
+	System.out.println(transRepo.insertTransaction(23,"10/10/2022", "Salary November", 50000.0, 0.0d));
 
 	}
 	
@@ -64,7 +64,8 @@ public class TransRepo {
 					Double db_credit_amt = rs.getDouble("credit_amt");
 					transaction.setCredit_amt(db_credit_amt);
 					
-					
+					Double db_debit_amt = rs.getDouble("debit_amt");
+					transaction.setDebit_amt(db_debit_amt);
 					tranList.add(transaction);
 					
 				

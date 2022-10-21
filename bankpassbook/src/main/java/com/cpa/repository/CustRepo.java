@@ -23,7 +23,7 @@ public class CustRepo {
 		CustRepo custRepo = new CustRepo();
 		// custRepo.getAllCustomers();
 		// System.out.println(custRepo.isCustExist("9865326589"));;
-	System.out.println(	custRepo.insertCustomer("Komal", "Talera Nagar", "Talera Nagar", "Pune", "868613310"));
+//	System.out.println(	custRepo.insertCustomer("Komal", "Talera Nagar", "Talera Nagar", "Pune", "868613310"));
 //		String acc = "BOIN0022";
 //		Customer customer = custRepo.getCustomer("BOIN0022");
 //		System.out.println(customer);;
@@ -122,13 +122,13 @@ public class CustRepo {
 
 				String db_customer_phone = Long.toString(rs.getLong("phone"));
 
-				System.out.println(db_customer_phone);
+				//System.out.println(db_customer_phone);
 				if ((db_customer_phone.equals(phone)) == true) {
 					flag = 0;
 
 				}
 
-				System.out.println(flag);
+//				System.out.println(flag);
 
 			}
 		} catch (CPException exp) {
@@ -160,7 +160,7 @@ public class CustRepo {
 		props = new Properties();
 		FileInputStream fs = new FileInputStream("src/main/resources/bank_entity.properties");
 		props.load(fs);
-		System.out.println(props.getProperty("bankId"));
+	//	System.out.println(props.getProperty("bankId"));
 		final String SQL_INSERT = "INSERT INTO customer (bank_id, account_number, cust_name,address1 , address2, city, phone) VALUES (?,?,?,?,?,?,?)";
 
 		try {
@@ -182,19 +182,19 @@ public class CustRepo {
 
 			action = st.execute();
 			System.out.println("customer inserted successfully");
-			System.out.println(action);
+//			System.out.println(action);
 			
 			//CODE TO INITIALIZE ACCOUNT NUMBER SAME AS CUST_SEQ_ID
 			if (action == false) {
 //				System.out.println("@@@@@@@@@@@@@@@@@@@@");
 				final String SQL_LAST_ENTRY = "SELECT cust_seq_id FROM customer WHERE cust_seq_id=(SELECT MAX(cust_seq_id) FROM customer)";
 				rs = st1.executeQuery(SQL_LAST_ENTRY);
-				System.out.println(rs);
+//				System.out.println(rs);
 				while (rs.next()) {
 					long last_cust_seq_id = rs.getLong("cust_seq_id");
 
 					String updated_account_number = "BOIN00" + Long.toString(last_cust_seq_id);
-					System.out.println(updated_account_number);
+					//System.out.println(updated_account_number);
 					final String SQL_UPDATE = "UPDATE customer SET account_number =" + "'" + updated_account_number
 							+ "'" + "WHERE cust_seq_id = " + last_cust_seq_id;
 					st = con.prepareStatement(SQL_UPDATE);

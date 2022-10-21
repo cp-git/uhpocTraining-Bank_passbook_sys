@@ -22,10 +22,7 @@ public class TransServiceImpl implements TransService {
 	public static void main(String[] args) {
 
 		TransServiceImpl serviceImpl = new TransServiceImpl();
-		// System.out.println(serviceImpl.initializeHashMap());
-//		System.out.println(serviceImpl.getTransactionByAccNum("BOIN0022"));
-//		System.out.println(serviceImpl.getTransactionId("BOIN0022"));
-		System.out.println(serviceImpl.getCurrentBalance(1));
+		System.out.println(serviceImpl.getCurrentBalance(3));
 	}
 
 	
@@ -122,7 +119,7 @@ public class TransServiceImpl implements TransService {
 		return tran_id_list;
 	}
 	
-	public double getCurrentBalance(int tran_id) throws NullPointerException
+	public Double getCurrentBalance(int tran_id) throws NullPointerException
 	{
 	
 
@@ -132,31 +129,38 @@ public class TransServiceImpl implements TransService {
 
 //		ArrayList<Transaction> arrayList = new ArrayList<>();
 		trans_map = tranService.initializeHashMap();
-
+try {
 		for (Transaction transaction : trans_map.values()) {
 //				System.out.println("@@@@@@@@@@");
 //				System.out.println(cust);
-
-			System.out.println("%%%%%%%%%%%%%");
+//
+//			System.out.println("%%%%%%%%%%%%%");
 			int tranmap_tran_id = transaction.getTran_id();
-			System.out.println(tranmap_tran_id);
-			
+//			System.out.println(tranmap_tran_id);
+//			System.out.println(transaction);
+//			
 			if (tranmap_tran_id == tran_id) {
-				
-				System.out.println("Entered in if loop");
-				double tranmap_credit_amt = transaction.getCredit_amt();
-				double tranmap_debit_amt = transaction.getDebit_amt();
-				System.out.println("$$$$$$$$$$$$$$");
-				System.out.println(tranmap_credit_amt);
-				System.out.println(tranmap_debit_amt);
-				double current_balance = tranmap_credit_amt + tranmap_debit_amt;
-				 
+//				
+//				System.out.println("Entered in if loop");
+				Double tranmap_credit_amt = transaction.getCredit_amt();
+//				System.out.println(tranmap_credit_amt);
+				Double tranmap_debit_amt = transaction.getDebit_amt();
+//				System.out.println(tranmap_debit_amt);
+//				System.out.println("$$$$$$$$$$$$$$");
+//				System.out.println(tranmap_credit_amt);
+//				System.out.println(tranmap_debit_amt);
+				Double current_balance = tranmap_credit_amt + tranmap_debit_amt;
+//				System.out.println("current_balance"+current_balance);
 				return current_balance;
-				
+		
 			}
 
 		}
+}
 
+catch(NullPointerException e) {
+	System.out.println("null value");
+}
 		return 0.0;
 		
 		
