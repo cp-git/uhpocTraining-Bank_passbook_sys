@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import org.postgresql.util.PSQLException;
+
 import com.cpa.connectionpooling.DBManager;
 import com.cpa.entity.Transaction;
 import com.cpa.exception.CPException;
@@ -94,7 +96,7 @@ public class TransRepo {
 		public String insertTransaction(int cust_seq_id, String tran_date, String tran_details,Double credit_amt,Double debit_amt ) throws SQLException, IOException {
 			DBManager dbm = null;
 			Connection con = null;
-			boolean action = false;
+			
 			ResultSet rs = null;
 			PreparedStatement st = null;
 			
@@ -131,9 +133,9 @@ public class TransRepo {
 
 				st.executeUpdate();
 
-		
-				System.out.println("transaction inserted successfully");
-				System.out.println(action);
+				System.out.println("Transaction inserted successfully");
+				return "Transaction inserted successfully";
+				
 				
 				
 				
@@ -141,14 +143,14 @@ public class TransRepo {
 			}
 
 			catch (CPException exp) {
-				exp.printStackTrace();
+				System.out.println("Transaction creation failed");
 
 			}
-//			 catch(PSQLException psqlException)
-//			 {
-//			 System.out.println("Transaction Creation failed ");
-//			
-//			 }
+			 catch(PSQLException psqlException)
+			 {
+			 System.out.println("Transaction Creation failed ");
+			
+			 }
 			catch (Exception exp1) {
 				exp1.printStackTrace();
 			} finally {
@@ -156,6 +158,7 @@ public class TransRepo {
 
 			}
 			return null;
+			
 
 		}
 

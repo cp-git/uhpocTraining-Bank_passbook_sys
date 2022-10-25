@@ -136,7 +136,7 @@ public class DBManager {
 	}
 
 	private void printConSize() {
-		System.out.println(" Available Connection ... " + conManager.size());
+//		System.out.println(" Available Connection ... " + conManager.size());
 	}
 
 }

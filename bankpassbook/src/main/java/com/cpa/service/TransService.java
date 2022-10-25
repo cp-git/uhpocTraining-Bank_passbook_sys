@@ -19,4 +19,10 @@ public interface  TransService {
 
 
 	public String addTranDetails( String tran_date, String tran_details, Double credit_amt, Double debit_amt,String acc_num) throws SQLException, IOException;
+
+
+	public Double getCurrentBalance(int tran_id);
+
+
+	ArrayList<Transaction> getTransactionByAccNumOfCurrentMonth(String acc_number);
 }

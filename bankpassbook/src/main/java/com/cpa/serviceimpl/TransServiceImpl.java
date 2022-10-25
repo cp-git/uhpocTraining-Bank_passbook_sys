@@ -1,7 +1,10 @@
 package com.cpa.serviceimpl;
 
 import java.io.IOException;
+//import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +26,8 @@ public class TransServiceImpl implements TransService {
 
 		TransServiceImpl serviceImpl = new TransServiceImpl();
 		System.out.println(serviceImpl.getCurrentBalance(3));
+		
+//		System.out.println(serviceImpl.getTransactionByAccNumOfCurrentMonth("BOIN0025"));
 	}
 
 	
@@ -78,6 +83,56 @@ public class TransServiceImpl implements TransService {
 
 	}
 
+	// METHOD TO GET TRANSACTION BY ACCOUNT NUMBER OF  CURRENT MONTH
+		@Override
+		public ArrayList<Transaction> getTransactionByAccNumOfCurrentMonth(String acc_number) {
+			// TODO Auto-generated method stub
+			Integer tran_cust_id = custService.getCust_seq_idByAccNum(acc_number);
+
+			int flag = 1;
+
+			TransService tranService = new TransServiceImpl();
+			
+			//Getting the current date value
+		      LocalDate currentdate = LocalDate.now();
+			//Getting the current month
+		      Month currentMonth = currentdate.getMonth();
+		      System.out.println("Current month: "+currentMonth);
+		     //getting the current year
+		      int currentYear = currentdate.getYear();
+		      System.out.println("Current month: "+currentYear);
+			ArrayList<Transaction> arrayList = new ArrayList<>();
+			trans_map = tranService.initializeHashMap();
+
+			
+			for (Transaction transaction : trans_map.values()) {
+//					System.out.println("@@@@@@@@@@");
+//					System.out.println(cust);
+				
+				java.util.Date tran_date =  transaction.getTran_date();
+				 LocalDate currentDate
+		            = LocalDate.parse( (CharSequence) tran_date);
+				// Get month from date
+		   
+				Month month = currentDate.getMonth();
+		 System.out.println(month);
+		        // Get year from date
+		        int year = currentDate.getYear();
+		 System.out.println(year);
+				Integer tranmap_cust_seq_id = transaction.getCust_seq_id();
+
+				if ((tranmap_cust_seq_id.equals(tran_cust_id)) && (month == currentMonth) && (year == currentYear)) {
+
+					arrayList.add(transaction);
+
+				}
+
+			}
+
+			return arrayList;
+
+		}
+
 //FUNCTION TO GET INSERT INTO TRANSACTION ENTITY
 	public String addTranDetails(String tran_date, String tran_details, Double credit_amt, Double debit_amt,
 			String acc_num) throws SQLException, IOException {
@@ -88,7 +143,7 @@ public class TransServiceImpl implements TransService {
 
 	}
 	
-	
+	//		FUNCTION TO GET TRANSACTION ID BY ENTERING ACCOUNT NUMBER
 	public ArrayList<Integer> getTransactionId(String acc_number) 
 	{
 		Integer tran_cust_id = custService.getCust_seq_idByAccNum(acc_number);
@@ -119,6 +174,8 @@ public class TransServiceImpl implements TransService {
 		return tran_id_list;
 	}
 	
+	
+
 	public Double getCurrentBalance(int tran_id) throws NullPointerException
 	{
 	

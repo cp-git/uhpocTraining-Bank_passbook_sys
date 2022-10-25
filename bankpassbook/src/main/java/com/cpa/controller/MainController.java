@@ -1,15 +1,22 @@
 package com.cpa.controller;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.Properties;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.cpa.entity.Customer;
+import com.cpa.entity.Transaction;
 import com.cpa.exception.CPException;
 import com.cpa.service.CustService;
+import com.cpa.service.TransService;
 import com.cpa.serviceimpl.CustServiceImpl;
+import com.cpa.serviceimpl.TransServiceImpl;
 
 public class MainController {
 //comment
@@ -21,34 +28,16 @@ public class MainController {
 			System.out.println(
 					"Please enter the details for Customer  to be inserted for following fields customer name, customer address1, customer address1, customer city,customer phone respectively");
 
+			Pattern name_pattern = Pattern.compile("[^a-z]", Pattern.CASE_INSENSITIVE);
 			Pattern pattern = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
-			Pattern num_pattern = Pattern.compile("[0-9]");
+			Pattern num_pattern = Pattern.compile("[^0-9]");
 
 			Scanner sc = new Scanner(System.in);
 
-//			System.out.println("Enter Pan Number");
-//			String emp_panno = sc.next();
-//			Matcher matcher1 = pattern.matcher(emp_panno);
-//			boolean isStringContainsSpecialCharacter1 = matcher1.find();
-//
-//			if (isStringContainsSpecialCharacter1) {
-//				throw new CPException("001", "Invalid Pan Card number ");
-//			}
-//
-//			System.out.println("Enter PF Number");
-//			String emp_pfno = sc.next();
-//			Matcher matcher2 = pattern.matcher(emp_pfno);
-//			boolean isStringContainsSpecialCharacter2 = matcher2.find();
-//			if (isStringContainsSpecialCharacter2) {
-//				throw new CPException("002", "Invalid PF number ");
-//			}
-//
-//			System.out.println("Enter Company Id ");
-//			int company_id = sc.nextInt();
 
 			System.out.println("Enter Customer Name");
 			String cust_name = sc.next();
-			Matcher matcher3 = pattern.matcher(cust_name);
+			Matcher matcher3 = name_pattern.matcher(cust_name);
 			boolean isStringContainsSpecialCharacter3 = matcher3.find();
 			if (isStringContainsSpecialCharacter3) {
 				throw new CPException("004", "Invalid Customer Name ");
@@ -56,7 +45,7 @@ public class MainController {
 			
 			System.out.println("Enter Customer Phone");
 			String cust_phone = sc.next();
-			Matcher matcher5 = pattern.matcher(cust_phone);
+			Matcher matcher5 = num_pattern.matcher(cust_phone);
 			boolean isStringContainsSpecialCharacter5 = matcher5.find();
 			if (isStringContainsSpecialCharacter5 || cust_phone.length() < 10 || cust_phone.length() > 10  ) {
 				throw new CPException("004", "Invalid Customer Phone ");
@@ -82,7 +71,7 @@ public class MainController {
 
 					System.out.println("Enter Customer Name");
 					String loop_cust_name = sc2.next();
-					Matcher matcher6 = pattern.matcher(loop_cust_name);
+					Matcher matcher6 = name_pattern.matcher(loop_cust_name);
 					boolean isStringContainsSpecialCharacter6 = matcher6.find();
 					if (isStringContainsSpecialCharacter6) {
 						throw new CPException("004", "Invalid Customer Name ");
@@ -90,7 +79,7 @@ public class MainController {
 					
 					System.out.println("Enter Customer Phone");
 					String loop_cust_phone = sc.next();
-					Matcher matcher8 = pattern.matcher(loop_cust_phone);
+					Matcher matcher8 = num_pattern.matcher(loop_cust_phone);
 					boolean isStringContainsSpecialCharacter8 = matcher8.find();
 					if (isStringContainsSpecialCharacter8 || cust_phone.length() < 10 || cust_phone.length() > 10  ) {
 						throw new CPException("004", "Invalid Customer Phone ");
@@ -118,7 +107,7 @@ public class MainController {
 							
 							System.out.println("Enter Customer City");
 							String loop_cust_city = sc.next();
-							Matcher matcher7 = pattern.matcher(loop_cust_city);
+							Matcher matcher7 = name_pattern.matcher(loop_cust_city);
 							boolean isStringContainsSpecialCharacter7 = matcher7.find();
 							if (isStringContainsSpecialCharacter7) {
 								throw new CPException("004", "Invalid Customer City ");
@@ -163,7 +152,7 @@ public class MainController {
 				
 				System.out.println("Enter Customer City");
 				String cust_city = sc.next();
-				Matcher matcher4 = pattern.matcher(cust_city);
+				Matcher matcher4 = name_pattern.matcher(cust_city);
 				boolean isStringContainsSpecialCharacter4 = matcher4.find();
 				if (isStringContainsSpecialCharacter4) {
 					throw new CPException("004", "Invalid Customer City ");
@@ -195,13 +184,231 @@ public class MainController {
 	}
 	
 	
+	public static void transactionOption() throws CPException, SQLException, IOException {
+		try {
+		Transaction transaction = new Transaction();
+		CustService custService = new CustServiceImpl();
+		TransService transService = new TransServiceImpl();
+		System.out.println(
+				"Please enter the customer account number, transaction date and tranasaction details, credit amount and debit amount respectively");
+
+		Pattern pattern = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+//		Pattern date_pattern = Pattern.compile("[^a-z0-9/- ]", Pattern.CASE_INSENSITIVE);
+		Pattern num_pattern = Pattern.compile("[0-9]");
+
+		Scanner sc = new Scanner(System.in);
+
+
+		System.out.println("Enter Customer Account Number");
+		String acc_num = sc.next();
+		Matcher matcher3 = pattern.matcher(acc_num);
+		boolean isStringContainsSpecialCharacter3 = matcher3.find();
+		if (isStringContainsSpecialCharacter3) {
+			throw new CPException("001", "Invalid Customer account Number. ");
+		}
+		
+		if(custService.checkCustByAccNum(acc_num) == false) {
+			
+						System.out.println( "Customer account Number already exist.Do you want to re-enter account number [Y]es or [N]o");
+			String y_n_option = sc.next();
+			switch(y_n_option.toUpperCase())
+			{
+			case "Y":
+				System.out.println("Enter Customer Account Number");
+				String acc_num1 = sc.next();
+				if (isStringContainsSpecialCharacter3) {
+					throw new CPException("001", "Invalid Customer account Number");
+//					System.out.println( "Invalid Customer account Number. Do you want to re-enter account number [Y]es or [N]o");
+				}
+					System.out.println("Enter transaction date");
+					String tran_date = sc.next();
+//					Matcher matcher4 = date_pattern.matcher(tran_date);
+//					boolean isStringContainsSpecialCharacter4 = matcher4.find();
+//					if (isStringContainsSpecialCharacter4) {
+//						throw new CPException("004", "Invalid transaction date");
+//					}
+					
+					System.out.println("Enter transaction details");
+					String tran_details = sc.next();
+//					Matcher matcher5 = pattern.matcher(tran_details);
+//					boolean isStringContainsSpecialCharacter5 = matcher5.find();
+//					if (isStringContainsSpecialCharacter5) {
+//						throw new CPException("004", "Invalid transaction details");
+//					}
+					
+					System.out.println("Do you want to enter credit or debit amount .Press C  for credit and D for debit amount ");
+					
+					String c_d_option = sc.next();
+					switch(c_d_option.toUpperCase())
+					{
+					case "C":
+						try {
+						System.out.println("Please enter credit amount");
+						Double credit_amt = sc.nextDouble();
+						
+						Double debit_amt = 0.0d;
+//						String succes_message = transService.addTranDetails(tran_date, tran_details, credit_amt, debit_amt, acc_num);
+						transService.addTranDetails(tran_date, tran_details, credit_amt, debit_amt, acc_num);
+
+//						if(succes_message.equalsIgnoreCase("Transaction inserted successfully"))
+//						{
+//							
+//						}
+						}
+						catch(InputMismatchException e)
+						{System.out.println("Invalid credit amount");}
+						break;
+					case "D":
+						try {
+							System.out.println("Please enter debit amount");
+							Double debit_amt = sc.nextDouble();
+							
+							Double credit_amt = 0.0d;
+							transService.addTranDetails(tran_date, tran_details, credit_amt, debit_amt, acc_num);
+							}
+							catch(InputMismatchException e)
+							{System.out.println("Invalid debit amount");}
+						break;
+					default :
+						System.out.println("Invalid input");
+						
+					}
+				
+				break;
+			case "N":
+				break;
+			default:
+				System.out.println();
+			}
+			
+		
+		
+		}
+	
+		
+		System.out.println("Enter transaction date");
+		String tran_date = sc.next();
+//		Matcher matcher4 = date_pattern.matcher(tran_date);
+//		boolean isStringContainsSpecialCharacter4 = matcher4.find();
+//		if (isStringContainsSpecialCharacter4) {
+//			throw new CPException("004", "Invalid transaction date");
+//		}
+		
+		System.out.println("Enter transaction details");
+		String tran_details = sc.next();
+//		Matcher matcher5 = pattern.matcher(tran_details);
+//		boolean isStringContainsSpecialCharacter5 = matcher5.find();
+//		if (isStringContainsSpecialCharacter5) {
+//			throw new CPException("004", "Invalid transaction details");
+//		}
+		
+		System.out.println("Do you want to enter credit or debit amount .Press C  for credit and D for debit amount ");
+		
+		String c_d_option = sc.next();
+		switch(c_d_option.toUpperCase())
+		{
+		case "C":
+			try {
+			System.out.println("Please enter credit amount");
+			Double credit_amt = sc.nextDouble();
+			
+			Double debit_amt = 0.0d;
+			transService.addTranDetails(tran_date, tran_details, credit_amt, debit_amt, acc_num);
+		
+			}
+			catch(InputMismatchException e)
+			{System.out.println("Invalid credit amount");}
+			break;
+		case "D":
+			try {
+				System.out.println("Please enter debit amount");
+				Double debit_amt = sc.nextDouble();
+				
+				Double credit_amt = 0.0d;
+				transService.addTranDetails(tran_date, tran_details, credit_amt, debit_amt, acc_num);
+				}
+				catch(InputMismatchException e)
+				{System.out.println("Invalid debit amount");}
+			break;
+		default :
+			System.out.println("Invalid input");
+			
+		}
+		}
+		
+		catch (SQLException e) {
+			System.out.println();
+		}
+		catch (IOException e) {
+			// TODO: handle exception
+			System.out.println();
+		}
+		
+		
+	}
+	
+	
+	public static void passbookOption() throws CPException, IOException {
+		TransService transService = new TransServiceImpl();
+		CustService custService = new CustServiceImpl();
+		Customer customer = new Customer();
+		Transaction transaction = new Transaction();
+		System.out.println(
+				"Please enter the customer account number respectively");
+
+		Pattern pattern = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+//		Pattern date_pattern = Pattern.compile("[^a-z0-9/- ]", Pattern.CASE_INSENSITIVE);
+		Pattern num_pattern = Pattern.compile("[0-9]");
+	
+		Scanner sc = new Scanner(System.in);
+
+
+		System.out.println("Enter Customer Account Number");
+		String acc_num = sc.next();
+		Matcher matcher3 = pattern.matcher(acc_num);
+		boolean isStringContainsSpecialCharacter3 = matcher3.find();
+		if (isStringContainsSpecialCharacter3) {
+			throw new CPException("001", "Invalid Customer account Number. ");
+		}
+		
+		customer = custService.getCustomerByAccountNumber(acc_num);
+		ArrayList<Transaction> arrayList = new 	ArrayList<Transaction>();
+		arrayList = transService.getTransactionByAccNum(acc_num);
+		int sr_no = 0;
+		
+		int length = arrayList.size();
+		Properties props = new Properties();
+		FileInputStream fs = new FileInputStream("src/main/resources/bank_entity.properties");
+		props.load(fs);
+		System.out.println("						"+props.getProperty("bankName")+"						");
+		System.out.println("						"+props.getProperty("bankBranch")+"						");
+		System.out.println("						"+props.getProperty("bankCity")+"						");
+		System.out.println("Customer Name		"+customer.getCust_name());
+		System.out.println("Account Number		"+customer.getAccount_number());
+		System.out.println("Address1 		"+customer.getAddress1());
+		System.out.println("Address2		"+customer.getAddress2());
+		System.out.println("City			"+customer.getCity());
+		System.out.println("Phone			"+customer.getPhone());
+		System.out.println("Current Month Transaction");
+		System.out.println("Sr.No	"+"Tran Date	"+"Tran details			"+"Credit		"+"Debit		"+"Current Balance");
+		
+			for(int i=0; i<arrayList.size();i++)
+			{
+				Transaction transaction2 = arrayList.get(i);
+				System.out.println(sr_no++ +"	"+transaction2.getTran_date()+"		"+transaction2.getTran_details()+"			"+transaction2.getCredit_amt()+"		"+transaction2.getDebit_amt()+"		"+transService.getCurrentBalance(transaction2.getTran_id())			);
+			}
+
+		
+	}
 	public static void main(String[] args) throws Exception {
 
+		
+	
 		while (true) {
 			System.out.println("============= Main Menu ============");
 			System.out.println("1. Create Company Details");
-			System.out.println("2. Create Employee Details");
-			System.out.println("3. Print Pay slip");
+			System.out.println("2. Create Transaction Details");
+			System.out.println("3. Print Bank Passbook");
 			System.out.println("4. Exit");
 			Scanner scanner = new Scanner(System.in);
 			int option = scanner.nextInt();
@@ -215,13 +422,16 @@ public class MainController {
 				break;
 			case 2:
 				try {
-					
+				transactionOption();
 				} catch (InputMismatchException ime) {
-					System.out.println("invalid input");
+					System.out.println("Invalid input");
 				}
+				catch(CPException e)
+				{System.out.println("transaction creation failed");}
 				break;
 
 			case 3:
+				passbookOption();
 				break;
 			case 4:
 				System.exit(0);

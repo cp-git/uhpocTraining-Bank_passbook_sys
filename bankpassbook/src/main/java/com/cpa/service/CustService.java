@@ -20,5 +20,7 @@ public interface CustService {
 	public int getCust_seq_idByAccNum(String acc_no);
 
 	public Customer getCustomerByAccountNumber(String acc_no);
+
+	boolean checkCustByAccNum(String acc_number);
 	
 }

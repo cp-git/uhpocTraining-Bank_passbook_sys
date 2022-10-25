@@ -81,6 +81,35 @@ public class CustServiceImpl implements CustService{
 		
 		return (flag == 0) ? true : false;
 	}
+	
+	
+	//METHOD TO CHECK CUSTOMER PRESENSE IN HASHMAP BY ACCOUNT NUMBER
+		@Override
+		public boolean checkCustByAccNum(String acc_number) {
+			// TODO Auto-generated method stub
+			int flag =1;
+			//custRepo.isCustExist(phone);
+			
+			
+			CustService custService = new CustServiceImpl();
+			
+			cust_map = custService.initializeHashmap();
+			
+			for (Customer cust : cust_map.values()) {
+//				System.out.println("@@@@@@@@@@");
+//				System.out.println(cust);
+				
+				String custmap_acc_num = cust.getAccount_number();
+				
+				if(custmap_acc_num.equalsIgnoreCase(acc_number))
+				{
+					flag = 0;
+				}
+				
+			}
+			
+			return (flag == 0) ? true : false;
+		}
 
 	//METHOD TO ADD CUSTOMER INTO DATABASE
 	@Override
