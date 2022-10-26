@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<item key="org.eclipse.jdt.ui.lastextjar" value="C:\Users\pawan\Downloads"/>
+	<item key="filters_last_used" value="filter_imports;"/>
+	<item key="clean_up_save_particpant_modify_dialog.last_focus" value="1"/>
+	<item key="org.eclipse.jdt.uiformatter_page.modify_dialog_tab_page.last_focus_index" value="8"/>
+	<item key="clean_up_save_particpant_modify_dialog.preferred_width" value="899"/>
+	<item key="clean_up_save_particpant_modify_dialog.preferred_height" value="728"/>
+	<item key="clean_up_save_particpant_modify_dialog.preferred_x" value="234"/>
+	<item key="clean_up_save_particpant_modify_dialog.preferred_y" value="0"/>
 	<section name="JavaElementSearchActions">
 	</section>
 	<section name="NewPackageWizardPage">
 		<item key="create_package_info_java" value="true"/>
 	</section>
 	<section name="completion_proposal_size">
+		<item key="size.x" value="389"/>
+		<item key="size.y" value="231"/>
 	</section>
 	<section name="quick_assist_proposal_size">
 	</section>
@@ -68,5 +77,28 @@
 		<item key="DIALOG_WIDTH" value="516"/>
 		<item key="DIALOG_HEIGHT" value="691"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
+	</section>
+	<section name="JavaSearchPage">
+		<item key="CASE_SENSITIVE" value="false"/>
+		<item key="INCLUDE_MASK" value="11"/>
+		<item key="HISTORY_SIZE" value="0"/>
+	</section>
+	<section name="RefactoringWizard.preview">
+		<item key="width" value="600"/>
+		<item key="height" value="400"/>
+	</section>
+	<section name="org.eclipse.ltk.ui.refactoring.settings">
+		<item key="renameSubpackages" value="false"/>
+		<item key="updateTextualMatches" value="false"/>
+		<item key="updateQualifiedNames" value="false"/>
+		<item key="patterns" value="*"/>
+		<item key="updateSimilarElements" value="false"/>
+		<item key="updateSimilarElementsMatchStrategy" value="1"/>
+	</section>
+	<section name="org.eclipse.jdt.internal.ui.typehierarchy.QuickHierarchy">
+		<item key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_WIDTH" value="350"/>
+		<item key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_HEIGHT" value="306"/>
+		<item key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_USE_PERSISTED_SIZE" value="true"/>
+		<item key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_USE_PERSISTED_LOCATION" value="false"/>
 	</section>
 </section>

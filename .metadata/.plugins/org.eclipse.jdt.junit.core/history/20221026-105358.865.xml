@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="CustServiceImpltest.testGetCust_seq_idByAccNum" project="bankpassbook" tests="1" started="1" failures="0" errors="0" ignored="0">
-  <testcase name="testGetCust_seq_idByAccNum" classname="com.cpa.serviceimpl.CustServiceImpltest" time="0.0"/>
-</testrun>

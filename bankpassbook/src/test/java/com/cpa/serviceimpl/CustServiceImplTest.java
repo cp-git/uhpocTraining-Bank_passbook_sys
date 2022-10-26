@@ -149,6 +149,7 @@ public class CustServiceImplTest {
 	@After
 	public void tearDown() {
 		dbm.closeConnection(con);
+		System.gc();
 	}
 
 }

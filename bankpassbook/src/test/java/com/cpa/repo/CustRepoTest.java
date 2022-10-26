@@ -108,6 +108,7 @@ public class CustRepoTest {
 	@After
 	public void tearDown() {
 		dbm.closeConnection(con);
+		System.gc();
 	}
 
 }

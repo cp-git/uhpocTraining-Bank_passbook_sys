@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -70,5 +71,11 @@ public class TransRepoTest {
 
 		assertNotSame(status, "Transaction not inserted");
 
+	}
+
+	@After
+	public void tearDown() {
+		dbm.closeConnection(con);
+		System.gc();
 	}
 }

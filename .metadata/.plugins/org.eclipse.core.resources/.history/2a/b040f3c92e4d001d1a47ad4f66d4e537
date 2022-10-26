@@ -1,5 +1,0 @@
-dburl=jdbc:postgresql://localhost:5432/
-dbname=bankpassbook
-dbusername=postgres
-dbpassword=Pass1word
-maxcon=3

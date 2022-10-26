@@ -21,8 +21,8 @@ public class TransRepo {
 	public static void main(String[] args) throws SQLException, IOException {
 	TransRepo transRepo = new TransRepo();
 	
-	System.out.println(transRepo.getAllTransactions());
-	System.out.println(transRepo.insertTransaction(23,"10/10/2022", "Salary November", 50000.0, 0.0d));
+//	System.out.println(transRepo.getAllTransactions());
+	System.out.println(transRepo.insertTransaction(24, "10/10/2022", "Salary November", 50000.0, 0.0d));
 
 	}
 	
@@ -109,21 +109,12 @@ public class TransRepo {
 				con = dbm.getConnection();
 				Statement st1 = con.createStatement();
 				st = con.prepareStatement(SQL_INSERT);
-				SimpleDateFormat formatter=new SimpleDateFormat("dd/mm/yyyy");  
+				SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 				java.util.Date converted_tran_date = formatter.parse(tran_date); 
-				
-//				java.sql.Date sqlPackageDate = (java.sql.Date)converted_tran_date;
-			
-//			     java.sql.Date sqlDate = new java.sql.Date();
+
+
 			    java.sql.Date sqlDate = new java.sql.Date(converted_tran_date.getTime());
-			        // creating util date object by passing gettime()
-			        // method of sql date class
-//			        java.util.Date utilDate = new java.util.Date(sqlDate.getTime());
-//			 
-//			        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//			       
-//			        // converting the util date into string format
-//			        final String stringDate = dateFormat.format(utilDate);
+
 				
 				st.setInt(1, cust_seq_id);
 				st.setDate(2, sqlDate);

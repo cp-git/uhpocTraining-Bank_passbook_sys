@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="TransServiceImplTest.testAddTranDetails" project="bankpassbook" tests="1" started="1" failures="0" errors="0" ignored="0">
-  <testcase name="testAddTranDetails" classname="com.cpa.serviceimpl.TransServiceImplTest" time="0.211"/>
-</testrun>

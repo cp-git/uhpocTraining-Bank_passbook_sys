@@ -18,6 +18,7 @@ public class CPException extends Exception{
 		this.errCode = errCode;
 		this.errMsg = errMsg;
 		System.out.println(this.errMsg);
+//		System.exit(0);
 	}
 
 

@@ -1,6 +1,7 @@
 package com.cpa.serviceimpl;
 
 import java.io.IOException;
+import java.sql.Date;
 //import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -25,9 +26,9 @@ public class TransServiceImpl implements TransService {
 	public static void main(String[] args) {
 
 		TransServiceImpl serviceImpl = new TransServiceImpl();
-		System.out.println(serviceImpl.getCurrentBalance(3));
-
-		System.out.println(serviceImpl.getTransactionByAccNumOfCurrentMonth("BOIN0025"));
+//		System.out.println(serviceImpl.getCurrentBalance(3));
+		System.out.println(serviceImpl.initializeHashMap());
+		System.out.println(serviceImpl.getTransactionByAccNumOfCurrentMonth("BOIN0022"));
 	}
 
 	//// METHOD TO INITIALIZE HASHMAP FOR TRANSACTION ENTITY BY TRANSACTION TABLE IN
@@ -96,31 +97,26 @@ public class TransServiceImpl implements TransService {
 		// Getting the current month
 		Month currentMonth = currentdate.getMonth();
 
-		System.out.println("Current month: " + currentMonth.getValue());
-
-		// getting the current year
 		int currentYear = currentdate.getYear();
-		System.out.println("Current month: " + currentYear);
 
 		ArrayList<Transaction> arrayList = new ArrayList<>();
 		trans_map = tranService.initializeHashMap();
 
 		for (Transaction transaction : trans_map.values()) {
-//					System.out.println("@@@@@@@@@@");
-//					System.out.println(cust);
 
-			java.util.Date tran_date = transaction.getTran_date();
-			LocalDate currentDate = LocalDate.parse((CharSequence) tran_date);
-			// Get month from date
+			java.sql.Date tran_date = (Date) transaction.getTran_date();
 
-			Month month = currentDate.getMonth();
-			System.out.println(month);
-			// Get year from date
-			int year = currentDate.getYear();
-			System.out.println(year);
+			String string_tran_date = tran_date.toString();
+			java.sql.Date dat = java.sql.Date.valueOf(string_tran_date);
+
+			LocalDate localDate = dat.toLocalDate();
+
 			Integer tranmap_cust_seq_id = transaction.getCust_seq_id();
 
-			if ((tranmap_cust_seq_id.equals(tran_cust_id)) && (month == currentMonth) && (year == currentYear)) {
+//			System.out.println(transaction);
+
+			if ((tranmap_cust_seq_id.equals(tran_cust_id)) && (currentMonth.getValue() == localDate.getMonthValue())
+					&& (currentYear == localDate.getYear())) {
 
 				arrayList.add(transaction);
 
