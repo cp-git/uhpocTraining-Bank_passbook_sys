@@ -21,7 +21,7 @@ public class CustRepo {
 	private Properties props = null;
 	public static void main(String[] args) throws SQLException, IOException {
 		CustRepo custRepo = new CustRepo();
-		// custRepo.getAllCustomers();
+		System.out.println( custRepo.getAllCustomers());
 		// System.out.println(custRepo.isCustExist("9865326589"));;
 //	System.out.println(	custRepo.insertCustomer("Komal", "Talera Nagar", "Talera Nagar", "Pune", "868613310"));
 //		String acc = "BOIN0022";
@@ -205,7 +205,7 @@ public class CustRepo {
 //					System.out.println("@@@@@@@@@@@@@@@@@@@@");
 					final String SQL_LAST_ENTRY_ACC_NUM = "SELECT account_number FROM customer WHERE cust_seq_id=(SELECT MAX(cust_seq_id) FROM customer)";
 					rs = st1.executeQuery(SQL_LAST_ENTRY_ACC_NUM);
-					System.out.println(rs);
+//					System.out.println(rs);
 					while (rs.next()) {
 					String last_acc_number = rs.getString("account_number");
 					

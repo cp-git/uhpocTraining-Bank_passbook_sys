@@ -149,7 +149,7 @@ public class CustServiceImpl implements CustService{
 		return null;
 	}
 
-	
+	//METHOD TO GET CUSTOMER SEQ_ID BY ACCOUNT NUMBER
 	public int getCust_seq_idByAccNum(String acc_no)
 	{
 		// TODO Auto-generated method stub

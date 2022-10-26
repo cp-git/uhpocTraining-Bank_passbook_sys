@@ -16,7 +16,7 @@ public interface  TransService {
 
 	public ArrayList<Transaction> getTransactionByAccNum(String acc_number);
 
-
+	public ArrayList<Integer> getTransactionId(String acc_number);
 
 	public String addTranDetails( String tran_date, String tran_details, Double credit_amt, Double debit_amt,String acc_num) throws SQLException, IOException;
 

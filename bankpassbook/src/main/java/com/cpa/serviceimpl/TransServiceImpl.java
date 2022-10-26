@@ -26,11 +26,10 @@ public class TransServiceImpl implements TransService {
 
 		TransServiceImpl serviceImpl = new TransServiceImpl();
 		System.out.println(serviceImpl.getCurrentBalance(3));
-		
-//		System.out.println(serviceImpl.getTransactionByAccNumOfCurrentMonth("BOIN0025"));
+
+		System.out.println(serviceImpl.getTransactionByAccNumOfCurrentMonth("BOIN0025"));
 	}
 
-	
 	//// METHOD TO INITIALIZE HASHMAP FOR TRANSACTION ENTITY BY TRANSACTION TABLE IN
 	//// DB
 	@Override
@@ -48,9 +47,6 @@ public class TransServiceImpl implements TransService {
 		return (HashMap<Integer, Transaction>) trans_map;
 
 	}
-
-	
-
 
 	// METHOD TO GET TRANSACTION BY ACCOUNT NUMBER
 	@Override
@@ -83,57 +79,61 @@ public class TransServiceImpl implements TransService {
 
 	}
 
-	// METHOD TO GET TRANSACTION BY ACCOUNT NUMBER OF  CURRENT MONTH
-		@Override
-		public ArrayList<Transaction> getTransactionByAccNumOfCurrentMonth(String acc_number) {
-			// TODO Auto-generated method stub
-			Integer tran_cust_id = custService.getCust_seq_idByAccNum(acc_number);
+	// METHOD TO GET TRANSACTION BY ACCOUNT NUMBER OF CURRENT MONTH
+	@Override
+	public ArrayList<Transaction> getTransactionByAccNumOfCurrentMonth(String acc_number) {
+		// TODO Auto-generated method stub
 
-			int flag = 1;
+		Integer tran_cust_id = custService.getCust_seq_idByAccNum(acc_number);
 
-			TransService tranService = new TransServiceImpl();
-			
-			//Getting the current date value
-		      LocalDate currentdate = LocalDate.now();
-			//Getting the current month
-		      Month currentMonth = currentdate.getMonth();
-		      System.out.println("Current month: "+currentMonth);
-		     //getting the current year
-		      int currentYear = currentdate.getYear();
-		      System.out.println("Current month: "+currentYear);
-			ArrayList<Transaction> arrayList = new ArrayList<>();
-			trans_map = tranService.initializeHashMap();
+		int flag = 1;
 
-			
-			for (Transaction transaction : trans_map.values()) {
+		TransService tranService = new TransServiceImpl();
+
+		// Getting the current date value
+		LocalDate currentdate = LocalDate.now();
+
+		// Getting the current month
+		Month currentMonth = currentdate.getMonth();
+
+		System.out.println("Current month: " + currentMonth.getValue());
+
+		// getting the current year
+		int currentYear = currentdate.getYear();
+		System.out.println("Current month: " + currentYear);
+
+		ArrayList<Transaction> arrayList = new ArrayList<>();
+		trans_map = tranService.initializeHashMap();
+
+		for (Transaction transaction : trans_map.values()) {
 //					System.out.println("@@@@@@@@@@");
 //					System.out.println(cust);
-				
-				java.util.Date tran_date =  transaction.getTran_date();
-				 LocalDate currentDate
-		            = LocalDate.parse( (CharSequence) tran_date);
-				// Get month from date
-		   
-				Month month = currentDate.getMonth();
-		 System.out.println(month);
-		        // Get year from date
-		        int year = currentDate.getYear();
-		 System.out.println(year);
-				Integer tranmap_cust_seq_id = transaction.getCust_seq_id();
 
-				if ((tranmap_cust_seq_id.equals(tran_cust_id)) && (month == currentMonth) && (year == currentYear)) {
+			java.util.Date tran_date = transaction.getTran_date();
+			LocalDate currentDate = LocalDate.parse((CharSequence) tran_date);
+			// Get month from date
 
-					arrayList.add(transaction);
+			Month month = currentDate.getMonth();
+			System.out.println(month);
+			// Get year from date
+			int year = currentDate.getYear();
+			System.out.println(year);
+			Integer tranmap_cust_seq_id = transaction.getCust_seq_id();
 
-				}
+			if ((tranmap_cust_seq_id.equals(tran_cust_id)) && (month == currentMonth) && (year == currentYear)) {
+
+				arrayList.add(transaction);
 
 			}
 
-			return arrayList;
-
 		}
 
+		return arrayList;
+
+	}
+
 //FUNCTION TO GET INSERT INTO TRANSACTION ENTITY
+	@Override
 	public String addTranDetails(String tran_date, String tran_details, Double credit_amt, Double debit_amt,
 			String acc_num) throws SQLException, IOException {
 		// TODO Auto-generated method stub
@@ -142,10 +142,10 @@ public class TransServiceImpl implements TransService {
 		return transRepo.insertTransaction(cust_seq_id, tran_date, tran_details, credit_amt, debit_amt);
 
 	}
-	
-	//		FUNCTION TO GET TRANSACTION ID BY ENTERING ACCOUNT NUMBER
-	public ArrayList<Integer> getTransactionId(String acc_number) 
-	{
+
+	// FUNCTION TO GET TRANSACTION ID BY ENTERING ACCOUNT NUMBER
+	@Override
+	public ArrayList<Integer> getTransactionId(String acc_number) {
 		Integer tran_cust_id = custService.getCust_seq_idByAccNum(acc_number);
 
 		int flag = 1;
@@ -164,7 +164,7 @@ public class TransServiceImpl implements TransService {
 			if (tranmap_cust_seq_id.equals(tran_cust_id)) {
 
 				int tranmap_tran_id = transaction.getTran_id();
-				
+
 				tran_id_list.add(tranmap_tran_id);
 
 			}
@@ -173,12 +173,10 @@ public class TransServiceImpl implements TransService {
 
 		return tran_id_list;
 	}
-	
-	
 
-	public Double getCurrentBalance(int tran_id) throws NullPointerException
-	{
-	
+//FUNCTION TO CALCULATE CURRENT BALANCE
+	@Override
+	public Double getCurrentBalance(int tran_id) throws NullPointerException {
 
 		int flag = 1;
 
@@ -186,41 +184,40 @@ public class TransServiceImpl implements TransService {
 
 //		ArrayList<Transaction> arrayList = new ArrayList<>();
 		trans_map = tranService.initializeHashMap();
-try {
-		for (Transaction transaction : trans_map.values()) {
+		try {
+			for (Transaction transaction : trans_map.values()) {
 //				System.out.println("@@@@@@@@@@");
 //				System.out.println(cust);
 //
 //			System.out.println("%%%%%%%%%%%%%");
-			int tranmap_tran_id = transaction.getTran_id();
+				int tranmap_tran_id = transaction.getTran_id();
 //			System.out.println(tranmap_tran_id);
 //			System.out.println(transaction);
 //			
-			if (tranmap_tran_id == tran_id) {
+				if (tranmap_tran_id == tran_id) {
 //				
 //				System.out.println("Entered in if loop");
-				Double tranmap_credit_amt = transaction.getCredit_amt();
+					Double tranmap_credit_amt = transaction.getCredit_amt();
 //				System.out.println(tranmap_credit_amt);
-				Double tranmap_debit_amt = transaction.getDebit_amt();
+					Double tranmap_debit_amt = transaction.getDebit_amt();
 //				System.out.println(tranmap_debit_amt);
 //				System.out.println("$$$$$$$$$$$$$$");
 //				System.out.println(tranmap_credit_amt);
 //				System.out.println(tranmap_debit_amt);
-				Double current_balance = tranmap_credit_amt + tranmap_debit_amt;
+					Double current_balance = tranmap_credit_amt + tranmap_debit_amt;
 //				System.out.println("current_balance"+current_balance);
-				return current_balance;
-		
+					return current_balance;
+
+				}
+
 			}
-
 		}
-}
 
-catch(NullPointerException e) {
-	System.out.println("null value");
-}
+		catch (NullPointerException e) {
+			System.out.println("null value");
+		}
 		return 0.0;
-		
-		
+
 	}
 
 }

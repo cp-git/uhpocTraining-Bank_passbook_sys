@@ -1,0 +1,95 @@
+package com.cpa.serviceimpl;
+import static org.junit.Assert.assertEquals;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.cpa.connectionpooling.DBManager;
+import com.cpa.entity.Customer;
+import com.cpa.service.CustService;
+
+public class CustServiceImpltest {
+
+
+
+		static CustService custService = null;
+		static Map<String, Customer> map = null;
+		static DBManager dbm = null;
+		static List<Customer> list = null;
+		Connection con = null;
+
+		@BeforeClass
+		public static void setUpBeforeClass() throws Exception {
+			System.out.println("Before");
+			custService = new CustServiceImpl();
+			map = new HashMap<>();
+			dbm = DBManager.getDBManager();
+			list = new ArrayList<>();
+		}
+
+		@Before
+		public void setUp() throws Exception {
+			con = dbm.getConnection();
+		}
+
+		@Test
+		public void testinitializeHashmap() throws IOException {
+	
+			Properties props = new Properties();
+			
+			FileInputStream fs = new FileInputStream("src/main/resources/bank_entity.properties");
+			props.load(fs);
+			int bank_id = Integer.parseInt(props.getProperty("bankId")) ;
+			//Entries from Database
+			Customer customer1 = new Customer(29,bank_id ,"BOIN0029","Shradha", "Chinchwad", "Pimpri","Pune", "9856322145");
+			Customer customer2 = new Customer(27,bank_id ,"BOIN0027","Komal", "Talera Nagar", "Talera nagar","Pune", "868613310");
+
+			list.add(customer1);
+			list.add(customer2);
+			map = custService.initializeHashmap();
+			System.out.println(map);
+			for(int i=0;i<map.size();i++)
+			{
+				map.get("BOIN0027");
+				assertEquals("Success",map.get("BOIN0027") , customer2);
+				assertEquals("Success",map.get("BOIN0029") , customer1);
+			}
+//			System.out.println(callCache);
+//			List<Customer> customers = (List<Customer>) map.get(customer1);
+//			map.put("BOIN0027", customer1);
+//			map.put("BOIN0028", customer2);
+	//		Iterator<Customer> iterator = customers.iterator();
+			
+
+//			while (iterator.hasNext() ) {
+//				CallDetails callDetails = it1.next();
+//				CallDetails expCallDetails = it2.next();
+//
+//				assertEquals(callDetails.getCallDate(), expCallDetails.getCallDate());
+//				assertEquals(callDetails.getCallPhoneNo(), expCallDetails.getCallPhoneNo());
+//				assertEquals(callDetails.getCallInOut(), expCallDetails.getCallInOut());
+//				assertEquals(callDetails.getCallDuration(), expCallDetails.getCallDuration());
+//				assertEquals(callDetails.getCustomerAccNo(), expCallDetails.getCustomerAccNo());
+//			}
+			
+			
+
+		}
+
+		@After
+		public void tearDown() {
+			dbm.closeConnection(con);
+		}
+	
+}

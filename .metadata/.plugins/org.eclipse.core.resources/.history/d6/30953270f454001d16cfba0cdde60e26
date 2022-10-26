@@ -1,0 +1,66 @@
+package com.cpa.serviceimpl;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.cpa.connectionpooling.DBManager;
+import com.cpa.entity.Transaction;
+import com.cpa.service.TransService;
+
+public class TransServiceImplTest {
+
+	static TransService transService = null;
+	static Map<Integer, Transaction> map = null;
+	static DBManager dbm = null;
+	static List<Transaction> list = null;
+	Connection con = null;
+
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		System.out.println("Before");
+		transService = new TransServiceImpl();
+		map = new HashMap<Integer,Transaction>();
+		dbm = DBManager.getDBManager();
+		list = new ArrayList<>();
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		con = dbm.getConnection();
+	}
+
+
+	// method to check initializeHashmap() method
+	@Test
+	public void testinitializeHashmap() throws IOException {
+
+		Properties props = new Properties();
+
+		FileInputStream fs = new FileInputStream("src/main/resources/bank_entity.properties");
+		props.load(fs);
+		int bank_id = Integer.parseInt(props.getProperty("bankId"));
+		Date date ;
+		date = new Date("01/10/2022");
+		
+		// Entries from Database
+		Transaction transaction = new Transaction(1,22,date,"Salary",50000d,0.0d);
+		System.out.println(transaction);
+		list.add(transaction);
+		
+		map = transService.initializeHashMap();
+//		System.out.println(map.get("BOIN0027"));
+//		System.out.println(customer2);
+	}
+	
+}

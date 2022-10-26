@@ -1,0 +1,71 @@
+package com.cpa.repo;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.cpa.connectionpooling.DBManager;
+import com.cpa.entity.Customer;
+import com.cpa.repository.CustRepo;
+
+public class CustRepoTest {
+	static 	CustRepo custRepo ;
+	static DBManager dbm = null;
+	Connection con = null;
+	static List<Customer> list = null;
+
+	
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		System.out.println("Before");
+		 custRepo = new CustRepo();
+		dbm = DBManager.getDBManager();
+//		map = new HashMap<>();
+//	
+		list = new ArrayList<Customer>();
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		con = dbm.getConnection();
+	}
+
+	@Test
+	public void TestGetAllCustomers()
+	{
+		ArrayList<Customer> customers_actual = new ArrayList<>();
+		Customer customer = new Customer(22, 1, "BOIN0022", "Kshitija","Talera Nagar", "Talera Nagar", "Pune", "778613310");
+		customers_actual.add(customer);
+		
+		list = custRepo.getAllCustomers();
+		System.out.println(custRepo.getAllCustomers());
+		
+		 assertFalse(customers_actual.size() == list.size() );
+
+	
+	}
+	
+	@Test
+	public void testIsCustExist()
+	{
+		Boolean status = custRepo.isCustExist("868613310");
+		
+		assertTrue("success", status);
+		
+		
+	}
+	
+	@After
+	public void tearDown() {
+		dbm.closeConnection(con);
+	}
+
+}

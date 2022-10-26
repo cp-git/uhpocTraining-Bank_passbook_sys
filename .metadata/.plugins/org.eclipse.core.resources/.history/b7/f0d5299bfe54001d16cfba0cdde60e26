@@ -1,0 +1,47 @@
+package com.cpa.repo;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.cpa.connectionpooling.DBManager;
+import com.cpa.repository.CustRepo;
+import com.cpa.serviceimpl.CustServiceImpl;
+
+public class CustRepoTest {
+	static 	CustRepo custRepo = null;
+	static DBManager dbm = null;
+	Connection con = null;
+	
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		System.out.println("Before");
+		CustRepo custRepo = new CustRepo();
+		dbm = DBManager.getDBManager();
+//		map = new HashMap<>();
+//	
+//		list = new ArrayList<>();
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		con = dbm.getConnection();
+	}
+
+	@Test
+	public void TestGetAllCustomers()
+	{
+		
+	}
+	
+	@After
+	public void tearDown() {
+		dbm.closeConnection(con);
+	}
+
+}
