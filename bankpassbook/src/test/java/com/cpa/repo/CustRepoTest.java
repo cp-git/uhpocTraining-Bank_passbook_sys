@@ -18,13 +18,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.cpa.connectionpooling.DBManager;
+import com.cpa.connectionpooling.TestDBManager;
 import com.cpa.entity.Customer;
 import com.cpa.repository.CustRepo;
 
 public class CustRepoTest {
 	static 	CustRepo custRepo ;
-	static DBManager dbm = null;
+	static TestDBManager dbm = null;
 	Connection con = null;
 	static List<Customer> list = null;
 
@@ -33,7 +33,7 @@ public class CustRepoTest {
 	public static void setUpBeforeClass() throws Exception {
 		System.out.println("Before");
 		 custRepo = new CustRepo();
-		dbm = DBManager.getDBManager();
+		dbm = TestDBManager.getDBManager();
 //		map = new HashMap<>();
 //	
 		list = new ArrayList<Customer>();

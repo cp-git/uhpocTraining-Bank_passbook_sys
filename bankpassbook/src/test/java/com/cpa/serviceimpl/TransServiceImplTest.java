@@ -20,7 +20,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.cpa.connectionpooling.DBManager;
+import com.cpa.connectionpooling.TestDBManager;
 import com.cpa.entity.Transaction;
 import com.cpa.service.TransService;
 
@@ -28,7 +28,7 @@ public class TransServiceImplTest {
 
 	static TransService transService = null;
 	static Map<Integer, Transaction> map = null;
-	static DBManager dbm = null;
+	static TestDBManager dbm = null;
 	static List<Transaction> list = null;
 	Connection con = null;
 
@@ -37,7 +37,7 @@ public class TransServiceImplTest {
 		System.out.println("Before");
 		transService = new TransServiceImpl();
 		map = new HashMap<Integer,Transaction>();
-		dbm = DBManager.getDBManager();
+		dbm = TestDBManager.getDBManager();
 		list = new ArrayList<>();
 	}
 

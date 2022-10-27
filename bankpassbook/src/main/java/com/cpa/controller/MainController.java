@@ -62,14 +62,14 @@ public class MainController {
 			System.out.println(
 					"Please enter the details for Customer  to be inserted for following fields customer name, customer address1, customer address1, customer city,customer phone respectively");
 
-			Pattern name_pattern = Pattern.compile("[^a-z]", Pattern.CASE_INSENSITIVE);
+			Pattern name_pattern = Pattern.compile("[^a-z\\s]", Pattern.CASE_INSENSITIVE);
 			Pattern pattern = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
 			Pattern num_pattern = Pattern.compile("[^0-9]");
 
 			Scanner sc = new Scanner(System.in);
 
 			System.out.println("Enter Customer Name");
-			String cust_name = sc.next();
+			String cust_name = sc.nextLine();
 			Matcher matcher3 = name_pattern.matcher(cust_name);
 			boolean isStringContainsSpecialCharacter3 = matcher3.find();
 			if (isStringContainsSpecialCharacter3) {
@@ -77,7 +77,7 @@ public class MainController {
 			}
 
 			System.out.println("Enter Customer Phone");
-			String cust_phone = sc.next();
+			String cust_phone = sc.nextLine();
 			Matcher matcher5 = num_pattern.matcher(cust_phone);
 			boolean isStringContainsSpecialCharacter5 = matcher5.find();
 			if (isStringContainsSpecialCharacter5 || cust_phone.length() < 10 || cust_phone.length() > 10) {
@@ -100,7 +100,7 @@ public class MainController {
 					Scanner sc2 = new Scanner(System.in);
 
 					System.out.println("Enter Customer Name");
-					String loop_cust_name = sc2.next();
+					String loop_cust_name = sc2.nextLine();
 					Matcher matcher6 = name_pattern.matcher(loop_cust_name);
 					boolean isStringContainsSpecialCharacter6 = matcher6.find();
 					if (isStringContainsSpecialCharacter6) {
@@ -108,7 +108,7 @@ public class MainController {
 					}
 
 					System.out.println("Enter Customer Phone");
-					String loop_cust_phone = sc.next();
+					String loop_cust_phone = sc.nextLine();
 					Matcher matcher8 = num_pattern.matcher(loop_cust_phone);
 					boolean isStringContainsSpecialCharacter8 = matcher8.find();
 					if (isStringContainsSpecialCharacter8 || cust_phone.length() < 10 || cust_phone.length() > 10) {
@@ -125,10 +125,10 @@ public class MainController {
 						} else {
 
 							System.out.println("Enter Customer Address1");
-							String loop_cust_address1 = sc.next();
+							String loop_cust_address1 = sc.nextLine();
 
 							System.out.println("Enter Customer Address2");
-							String loop_cust_address2 = sc.next();
+							String loop_cust_address2 = sc.nextLine();
 
 							System.out.println("Enter Customer City");
 							String loop_cust_city = sc.next();
@@ -166,10 +166,10 @@ public class MainController {
 
 			else {
 				System.out.println("Enter Customer Address1");
-				String cust_address1 = sc.next();
+				String cust_address1 = sc.nextLine();
 
 				System.out.println("Enter Customer Address2");
-				String cust_address2 = sc.next();
+				String cust_address2 = sc.nextLine();
 
 				System.out.println("Enter Customer City");
 				String cust_city = sc.next();
@@ -213,7 +213,7 @@ public class MainController {
 		}
 
 		System.out.println("Enter transaction details");
-		String tran_details = sc.next();
+		String tran_details = sc.nextLine();
 //		
 
 		System.out.println("Do you want to enter credit or debit amount .Press C  for credit and D for debit amount ");
@@ -238,7 +238,7 @@ public class MainController {
 						transactionLoop(acc_num);
 					} else if (op.equalsIgnoreCase("n")) {
 
-						break;
+						throw new CPException("010", " ");
 					} else {
 						throw new CPException("010", "Invalid input ");
 					}
@@ -264,7 +264,7 @@ public class MainController {
 						transactionLoop(acc_num);
 					} else if (op.equalsIgnoreCase("n")) {
 
-						break;
+						throw new CPException("010", " ");
 					} else {
 						throw new CPException("010", "Invalid input ");
 					}
@@ -321,7 +321,7 @@ public class MainController {
 					}
 
 					System.out.println("Enter transaction details");
-					String tran_details = sc.next();
+					String tran_details = sc.nextLine();
 //					
 
 					System.out.println(
@@ -347,7 +347,7 @@ public class MainController {
 								if (op.equalsIgnoreCase("y")) {
 									transactionLoop(acc_num1);
 								} else if (op.equalsIgnoreCase("n")) {
-									break;
+									throw new CPException("010", " ");
 								} else {
 									throw new CPException("010", "Invalid input ");
 								}
@@ -371,7 +371,7 @@ public class MainController {
 								if (op.equalsIgnoreCase("y")) {
 									transactionLoop(acc_num1);
 								} else if (op.equalsIgnoreCase("n")) {
-									break;
+									throw new CPException("010", " ");
 								} else {
 									throw new CPException("010", "Invalid input ");
 								}
@@ -387,7 +387,7 @@ public class MainController {
 
 					break;
 				case "N":
-					break;
+					throw new CPException("010", " ");
 				default:
 					System.out.println();
 				}
@@ -401,7 +401,7 @@ public class MainController {
 			}
 
 			System.out.println("Enter transaction details");
-			String tran_details = sc.next();
+			String tran_details = sc.nextLine();
 //		Matcher matcher5 = pattern.matcher(tran_details);
 //		boolean isStringContainsSpecialCharacter5 = matcher5.find();
 //		if (isStringContainsSpecialCharacter5) {
@@ -429,7 +429,7 @@ public class MainController {
 							transactionLoop(acc_num);
 						} else if (op.equalsIgnoreCase("n")) {
 
-							break;
+							throw new CPException("010", " ");
 						} else {
 							throw new CPException("010", "Invalid input ");
 						}
@@ -455,7 +455,7 @@ public class MainController {
 							transactionLoop(acc_num);
 						} else if (op.equalsIgnoreCase("n")) {
 
-							break;
+							throw new CPException("010", " ");
 						} else {
 							throw new CPException("010", "Invalid input ");
 						}
@@ -611,6 +611,7 @@ public class MainController {
 			System.out.println("2. Create Transaction Details");
 			System.out.println("3. Print Bank Passbook");
 			System.out.println("4. Exit");
+			System.out.println("Please enter your option 1, 2, 3 or 4");
 			Scanner scanner = new Scanner(System.in);
 			int option = scanner.nextInt();
 			switch (option) {

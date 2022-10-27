@@ -21,7 +21,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.cpa.connectionpooling.DBManager;
+import com.cpa.connectionpooling.TestDBManager;
 import com.cpa.entity.Customer;
 import com.cpa.service.CustService;
 
@@ -29,7 +29,7 @@ public class CustServiceImplTest {
 
 	static CustService custService = null;
 	static Map<String, Customer> map = null;
-	static DBManager dbm = null;
+	static TestDBManager dbm = null;
 	static List<Customer> list = null;
 	Connection con = null;
 
@@ -38,7 +38,7 @@ public class CustServiceImplTest {
 		System.out.println("Before");
 		custService = new CustServiceImpl();
 		map = new HashMap<>();
-		dbm = DBManager.getDBManager();
+		dbm = TestDBManager.getDBManager();
 		list = new ArrayList<>();
 	}
 

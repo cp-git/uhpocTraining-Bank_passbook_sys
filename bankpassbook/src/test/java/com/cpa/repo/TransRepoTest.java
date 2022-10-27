@@ -15,14 +15,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.cpa.connectionpooling.DBManager;
+import com.cpa.connectionpooling.TestDBManager;
 import com.cpa.entity.Transaction;
 import com.cpa.repository.TransRepo;
 
 public class TransRepoTest {
 
 	static 	TransRepo transRepo ;
-	static DBManager dbm = null;
+	static TestDBManager dbm = null;
 	Connection con = null;
 	static List<Transaction> list = null;
 
@@ -32,7 +32,7 @@ public class TransRepoTest {
 	public static void setUpBeforeClass() throws Exception {
 		System.out.println("Before");
 		 transRepo = new TransRepo();
-		dbm = DBManager.getDBManager();
+		dbm = TestDBManager.getDBManager();
 //		map = new HashMap<>();
 //	
 		list = new ArrayList<Transaction>();

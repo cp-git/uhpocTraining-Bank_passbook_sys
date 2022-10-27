@@ -1,7 +1,5 @@
 package com.cpa.connectionpooling;
 
-
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class MessageBundle {
@@ -17,7 +15,8 @@ public class MessageBundle {
 	private void loadBundle() {
 		try {
 //			System.out.println("Inside Load bundle");
-			//rb = ResourceBundle.getBundle(RESOURCE_BUNDLE, new Locale("en_IN"), this.getClass().getClassLoader());
+			// rb = ResourceBundle.getBundle(RESOURCE_BUNDLE, new Locale("en_IN"),
+			// this.getClass().getClassLoader());
 		} catch (Exception exp) {
 			exp.printStackTrace();
 		}
@@ -31,7 +30,7 @@ public class MessageBundle {
 		if (null == mb) {
 			mb = new MessageBundle();
 		}
-		//System.out.println(mb);
+		// System.out.println(mb);
 		return mb;
 	}
 }

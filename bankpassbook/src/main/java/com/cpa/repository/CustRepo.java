@@ -143,6 +143,7 @@ public class CustRepo {
 	// FUNCTION TO INSERT NEW CUSTOMER
 	public String insertCustomer(String customer_name, String customer_address1, String customer_address2,
 			String customer_city, String customer_phone) throws SQLException, IOException {
+
 		DBManager dbm = null;
 		Connection con = null;
 		boolean action = false;
