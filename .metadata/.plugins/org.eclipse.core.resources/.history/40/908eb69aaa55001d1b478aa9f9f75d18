@@ -607,7 +607,7 @@ public class MainController {
 
 		while (true) {
 			System.out.println("============= Main Menu ============");
-			System.out.println("1. Create Customer Details");
+			System.out.println("1. Create Company Details");
 			System.out.println("2. Create Transaction Details");
 			System.out.println("3. Print Bank Passbook");
 			System.out.println("4. Exit");
